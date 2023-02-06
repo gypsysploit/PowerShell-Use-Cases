@@ -1,0 +1,13 @@
+$List = Import-CSV C:\Scripts\VMs.csv -Header 'Name'
+$TotalItems=$List.Count
+$CurrentItem = 0
+$PercentComplete = 0
+ForEach($VM in $List)
+{
+Write-Progress -Activity "Checking Virtual Machines" -Status "$PercentComplete% Complete:" -PercentComplete $PercentComplete
+$Name = $VM.Name
+Get-VM -Name $Name
+$CurrentItem++
+$PercentComplete = [int](($CurrentItem / $TotalItems) * 100)
+Start-Sleep -Milliseconds 2500
+}
